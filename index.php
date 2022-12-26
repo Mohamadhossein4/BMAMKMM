@@ -1,23 +1,46 @@
 <?php
+if (isset($_POST['submit'])) {
+    $a = $_POST['numbers1'];
+    $b = $_POST['numbers2'];
 
-$input = $_POST['numbers'];
-$array = explode(',', $input);
-function primeFactors($input)
-{
-    while ($input % 2 == 0) {
-        echo 2, " ";
-        $input = $input / 2;
+    $num = 1;
+    $array = [];
+    $array1 = [];
+
+    if ($a > $b) {$max = $a;
+    } else { $max = $b;
     }
-    for ($i = 3; $i <= sqrt($input);
-         $i = $i + 2) {
-        while ($input % $i == 0) {
-            echo $i, " ";
-            $input = $input / $i;
+    $num = $max;
+    while ($num) {
+        if ($a % $num == 0) {
+            $array[] = $num;
         }
+        if ($b % $num == 0) {
+            $array1[] = $num;
+        }
+        --$num;
     }
-    if ($input > 2)
-        print_r($array);
+    $bmm = array_intersect($array, $array1);
+    echo "بزرگترین مقسوم علیه مشترک :" . current($bmm) . '<br>';
+    $num = $max;
+    while ($num) {
+        $array[] = $a * $num;
+        $array1[] = $b * $num;
+
+        --$num;
+
+    }
+    $kmm = array_intersect($array, $array1);
+    echo "کوجکترین مضرب مشترک  :" . end($kmm) . "<br>";
 }
+?>
+<form method="post">
+    <label> عدد اول را وارد کنید</label><br/>
+    <input type="number" name="numbers1"/><br/>
+    <label> عدد دوم را وارد کنید</label><br/>
+    <input type="number" name="numbers2"/><br/>
+    <input type="submit" name="submit" value="run"/>
+</form>
 
 
-primeFactors($input);
+
